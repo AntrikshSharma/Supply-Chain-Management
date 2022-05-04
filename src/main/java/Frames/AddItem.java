@@ -1,31 +1,35 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package Frames;
 
 import javax.swing.table.DefaultTableModel;
 import Classes.*;
+import MyExceptions.InvalidPriceException;
+import java.util.List;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import javax.swing.table.TableModel;
 
-
-/**
- *
- * @author archi
- */
-public class AddItem extends javax.swing.JFrame {
+public final class AddItem extends javax.swing.JFrame {
 
     /**
      * Creates new form AddItem
      */
     public AddItem() {
+        initComponents();
         
-        initComponents(); 
+        
+        DefaultTableModel dtm = new DefaultTableModel();
+        
+        String c[] = {"Pr Id", "Category", "Qty", "Price"};
+        dtm.addColumn(c[0]);
+        dtm.addColumn(c[1]);
+        dtm.addColumn(c[2]);
+        dtm.addColumn(c[3]);
+        cart.setModel(dtm);
+        
         updateTable1();
         updateTable2();
         updateTable3();
     }
-    
-    
     public void updateTable1() {
         
         //reload the complete table  
@@ -41,6 +45,13 @@ public class AddItem extends javax.swing.JFrame {
         model.addColumn("Decription");
         model.addColumn("Price");
         
+        Item itemobj = new Item();
+        
+        List <Item> listitem = itemobj.getAll();
+        for ( int i=0; i < listitem.size(); ++i) {
+            Object a[] = {i+1, listitem.get(i).owner.getName(), listitem.get(i).owner.getPhone(), listitem.get(i).owner.getAddress(), listitem.get(i).owner.getEmail(), listitem.get(i).getCategory(), listitem.get(i).getDescription(), listitem.get(i).getPrice()};
+            model.addRow(a);
+        }
         
         itemtable.setModel(model);
     }
@@ -61,6 +72,13 @@ public class AddItem extends javax.swing.JFrame {
         model.addColumn("Decription");
         model.addColumn("Price");
         
+        Item itemobj = new Item();
+        List <Item> listitem = itemobj.getAll();
+        for ( int i=0; i < listitem.size(); ++i) {
+            Object a[] = {i+1, listitem.get(i).owner.getName(), listitem.get(i).owner.getPhone(), listitem.get(i).owner.getAddress(), listitem.get(i).owner.getEmail(), listitem.get(i).getCategory(), listitem.get(i).getDescription(), listitem.get(i).getPrice()};
+            model.addRow(a);
+        }
+       
         table2.setModel(model);
     }
     
@@ -76,6 +94,13 @@ public class AddItem extends javax.swing.JFrame {
         model.addColumn("Total");
         
         
+        Order orderobj = new Order();
+        
+        List <Order> listorder = orderobj.getAll();
+        for ( int i=0; i < listorder.size(); ++i) {
+            Object a[] = {i+1, listorder.get(i).getName(), listorder.get(i).getPhone(), listorder.get(i).getTotal()};
+            model.addRow(a);
+        }
         table3.setModel(model);
     }
 
@@ -114,8 +139,6 @@ public class AddItem extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         table2 = new javax.swing.JTable();
         jLabel11 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        idlist = new javax.swing.JList<>();
         jLabel13 = new javax.swing.JLabel();
         id = new javax.swing.JTextField();
         qty = new javax.swing.JTextField();
@@ -123,16 +146,14 @@ public class AddItem extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
+        total = new javax.swing.JLabel();
         custname = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
         custphone = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        categorylist = new javax.swing.JList<>();
-        jScrollPane6 = new javax.swing.JScrollPane();
-        pricelist = new javax.swing.JList<>();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        cart = new javax.swing.JTable();
         jInternalFrame2 = new javax.swing.JInternalFrame();
         jScrollPane4 = new javax.swing.JScrollPane();
         table3 = new javax.swing.JTable();
@@ -245,7 +266,7 @@ public class AddItem extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(category, 0, 169, Short.MAX_VALUE))
+                                        .addComponent(category, 0, 182, Short.MAX_VALUE))
                                     .addGroup(jInternalFrame3Layout.createSequentialGroup()
                                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -269,8 +290,8 @@ public class AddItem extends javax.swing.JFrame {
         jInternalFrame3Layout.setVerticalGroup(
             jInternalFrame3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jInternalFrame3Layout.createSequentialGroup()
-                .addContainerGap(23, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 387, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addGap(28, 28, 28)
@@ -318,8 +339,6 @@ public class AddItem extends javax.swing.JFrame {
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel11.setText("CART");
 
-        jScrollPane3.setViewportView(idlist);
-
         jLabel13.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel13.setText("ADD ITEM");
@@ -343,9 +362,9 @@ public class AddItem extends javax.swing.JFrame {
         jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel16.setText("CHECKOUT");
 
-        jLabel17.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel17.setText("SUBTOTAL: /-");
+        total.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        total.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        total.setText("0");
 
         jLabel18.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -362,9 +381,18 @@ public class AddItem extends javax.swing.JFrame {
             }
         });
 
-        jScrollPane5.setViewportView(categorylist);
-
-        jScrollPane6.setViewportView(pricelist);
+        cart.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane3.setViewportView(cart);
 
         javax.swing.GroupLayout jInternalFrame4Layout = new javax.swing.GroupLayout(jInternalFrame4.getContentPane());
         jInternalFrame4.getContentPane().setLayout(jInternalFrame4Layout);
@@ -386,19 +414,18 @@ public class AddItem extends javax.swing.JFrame {
                                 .addGroup(jInternalFrame4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(id, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
                                     .addComponent(qty))))
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jInternalFrame4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jInternalFrame4Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGap(680, 680, 680)
                                 .addGroup(jInternalFrame4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(total, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(jInternalFrame4Layout.createSequentialGroup()
+                                .addGap(26, 26, 26)
+                                .addComponent(jScrollPane3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jInternalFrame4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jInternalFrame4Layout.createSequentialGroup()
                                         .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
@@ -406,10 +433,9 @@ public class AddItem extends javax.swing.JFrame {
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jInternalFrame4Layout.createSequentialGroup()
                                         .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(custphone, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                        .addComponent(custphone, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jInternalFrame4Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 15, Short.MAX_VALUE)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1277, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -421,9 +447,8 @@ public class AddItem extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel11)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jInternalFrame4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3)
                     .addGroup(jInternalFrame4Layout.createSequentialGroup()
                         .addComponent(jLabel13)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -437,7 +462,7 @@ public class AddItem extends javax.swing.JFrame {
                         .addGap(34, 34, 34)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jInternalFrame4Layout.createSequentialGroup()
-                        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(total, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel16)
                         .addGap(18, 18, 18)
@@ -448,11 +473,12 @@ public class AddItem extends javax.swing.JFrame {
                         .addGroup(jInternalFrame4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(custphone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel19))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                         .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(8, 8, 8))
-                    .addComponent(jScrollPane5)
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addGroup(jInternalFrame4Layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -480,7 +506,7 @@ public class AddItem extends javax.swing.JFrame {
             jInternalFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jInternalFrame2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 1277, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 1292, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jInternalFrame2Layout.setVerticalGroup(
@@ -493,7 +519,7 @@ public class AddItem extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("PREVIOUS ORDERS", jInternalFrame2);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("SUPPLY CHAIN MANAGEMENT");
 
@@ -511,7 +537,7 @@ public class AddItem extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(24, Short.MAX_VALUE)
+                .addContainerGap(21, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 633, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -537,40 +563,101 @@ public class AddItem extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         String uname = name.getText();
-        int phone = Integer.parseInt(phonenum.getText());
+        int phone = Integer.parseInt(phonenum.getText().toString().trim());
         String address = addr.getText();
         String em = email.getText();
         String cat = category.getSelectedItem().toString();
         String desc = description.getText();
-        float prc = Integer.parseInt(price.getText());
+        float prc = 0.0f;
+        String temp = price.getText();
+        try{
+            if ( temp.length() == 0 || Float.parseFloat(temp) <= 0) {
+                throw new InvalidPriceException("Invalid price");
+            }
+            prc = Float.parseFloat(temp);
+            User user = new User(uname, phone, address, em);
+            Item item = new Item(user, cat, desc, prc);
+            item.save();
+            updateTable1();
+            updateTable2();
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(this, "Invalid price", "Error", JOptionPane.ERROR_MESSAGE);
+        }
         
-        User user = new User(uname, phone, address, em);
-        Item item = new Item(user, cat, desc, prc);
         
-        
-        
-        
-        
-        
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        int ID = Integer.parseInt(id.getText());
-        int QTY = Integer.parseInt(qty.getText());
+        int ID = Integer.parseInt(id.getText().trim());
+        int QTY = Integer.parseInt(qty.getText().trim());
+        float subtotal = Float.parseFloat(total.getText());
+        TableModel tbm = table2.getModel();
+        try {
+            
+            String prid = tbm.getValueAt(ID-1, 0).toString();
+            String cat = tbm.getValueAt(ID-1, 5).toString();
+            float pprice = Float.parseFloat(tbm.getValueAt(ID-1, 7).toString())*QTY;
+           
+            
+            DefaultTableModel dtm = new DefaultTableModel();
+            String c[] = {"Pr Id", "Category", "Qty", "Price"};
+            dtm.addColumn(c[0]);
+            dtm.addColumn(c[1]);
+            dtm.addColumn(c[2]);
+            dtm.addColumn(c[3]);
+            
+            for ( int i = 0; i < cart.getModel().getRowCount(); ++i) {
+                Object data[] = {cart.getModel().getValueAt(i, 0), cart.getModel().getValueAt(i, 1), cart.getModel().getValueAt(i, 2), cart.getModel().getValueAt(i, 3)};
+                dtm.addRow(data);
+            }
+           
+            Object data[] = {prid, cat, QTY, pprice};
+            dtm.addRow(data);
+            
+            cart.setModel(dtm);
+            subtotal += pprice;
+            total.setText(subtotal+"");
+        }
+        catch (Exception e){
+          JOptionPane.showMessageDialog(this, "Error: Cannot Find " + e);
+        }
+        
+        
+//        Item itemobj = new Item();
+//        List <Item> itemlist = itemobj.getAll();
+//        for(int i=0; i<itemlist.size(); ++i) {
+//                if ( )
+//            }
+//        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        float total = 0;
-        for (int i =0 ; i < pricelist.getModel().getSize(); ++i)
-        {
-            total += Float.parseFloat(pricelist.getModel().getElementAt(i));
-        }
-        
+        Float totalamt =  Float.parseFloat(total.getText());
         String cname = custname.getText();
         String cphn = custphone.getText();
         
+        Order neworder = new Order(cname, cphn, totalamt);
+        neworder.save();
+        updateTable3();
+        JOptionPane.showMessageDialog(this, "Check Out Successfull. Visit Us Again!");
+        
+        DefaultTableModel dtm = new DefaultTableModel();
+        
+        String c[] = {"Pr Id", "Category", "Qty", "Price"};
+        dtm.addColumn(c[0]);
+        dtm.addColumn(c[1]);
+        dtm.addColumn(c[2]);
+        dtm.addColumn(c[3]);
+        cart.setModel(dtm);
+        
+        
+        custname.setText("");
+        custphone.setText("");
+        id.setText("");
+        qty.setText("");
     }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
@@ -610,14 +697,13 @@ public class AddItem extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField addr;
+    private javax.swing.JTable cart;
     private javax.swing.JComboBox<String> category;
-    private javax.swing.JList<String> categorylist;
     private javax.swing.JTextField custname;
     private javax.swing.JTextField custphone;
     private javax.swing.JTextField description;
     private javax.swing.JTextField email;
     private javax.swing.JTextField id;
-    private javax.swing.JList<String> idlist;
     private javax.swing.JTable itemtable;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
@@ -632,7 +718,6 @@ public class AddItem extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
@@ -648,15 +733,13 @@ public class AddItem extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField name;
     private javax.swing.JTextField phonenum;
     private javax.swing.JTextField price;
-    private javax.swing.JList<String> pricelist;
     private javax.swing.JTextField qty;
     private javax.swing.JTable table2;
     private javax.swing.JTable table3;
+    private javax.swing.JLabel total;
     // End of variables declaration//GEN-END:variables
 }

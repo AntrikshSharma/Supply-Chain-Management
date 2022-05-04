@@ -1,7 +1,7 @@
 package credentials;
 
 public class DataBase {
-    private final String url = "jdbc:myql://localhost:3360/scm";
+    private final String url = "jdbc:mysql://localhost:3306/scm";
     private final String userName = "root";
     private final String password = "admin";
     
