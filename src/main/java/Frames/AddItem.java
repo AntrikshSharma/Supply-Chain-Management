@@ -4,7 +4,6 @@ import javax.swing.table.DefaultTableModel;
 import Classes.*;
 import MyExceptions.InvalidPriceException;
 import java.util.List;
-import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableModel;
 
