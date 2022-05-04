@@ -4,6 +4,11 @@
  */
 package Classes;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 public class Order {
 
     String name;
@@ -20,5 +25,9 @@ public class Order {
     
     public float getTotal() {
         return total;
+    }
+    
+    public void save() {
+        
     }
 }
